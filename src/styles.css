@@ -1,0 +1,19 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+form {
+  margin: 1rem;
+}
+
+.textfield {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+}
+button {
+  display: block;
+  margin: 1rem auto;
+}
