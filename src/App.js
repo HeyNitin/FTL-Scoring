@@ -16,7 +16,6 @@ export default function App() {
 			const res = await axios.get(
 				`https://FTL-Scoring.heynitin.repl.co/${playerName}/${gameWeek}/${exact}`
 			);
-			console.log(res.data);
 			setPlayers(res.data);
 		} catch (e) {
 			alert("Something went wrong!");
