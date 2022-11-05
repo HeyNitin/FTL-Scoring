@@ -3,23 +3,29 @@ import "./styles.css";
 import axios from "axios";
 
 export default function App() {
-  const [playerName, setPlayerName] = useState("");
-  const [gameWeek, setGameWeek] = useState("");
-  const [players, setPlayers] = useState({ response: [], notFound: [] });
-  const [isLoading, setIsLoading] = useState(false);
-  const [exact, setExact] = useState(false);
+	const [playerName, setPlayerName] = useState("");
+	const [gameWeek, setGameWeek] = useState("");
+	const [exact, setExact] = useState(true);
+	const [players, setPlayers] = useState({ response: [], notFound: [] });
+	const [isLoading, setIsLoading] = useState(false);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const res = await axios.get(
-      `https://FTL-Scoring.heynitin.repl.co/${playerName}/${gameWeek}/${exact}`
-    );
-    setPlayers(res.data);
-    setIsLoading(false);
-  };
+	const submitHandler = async (e) => {
+		e.preventDefault();
+		setIsLoading(true);
+		try {
+			const res = await axios.get(
+				`https://FTL-Scoring.heynitin.repl.co/${playerName}/${gameWeek}/${exact}`
+			);
+			console.log(res.data);
+			setPlayers(res.data);
+		} catch (e) {
+			alert("Something went wrong!");
+			console.log(e);
+		}
+		setIsLoading(false);
+	};
 
-  return (
+	return (
 		<div className="App">
 			<form onSubmit={(e) => submitHandler(e)}>
 				<input
@@ -32,11 +38,11 @@ export default function App() {
 					className="textfield"
 					value={playerName}
 					onChange={(e) => setPlayerName(e.target.value)}
-					placeholder="Enter player's Name"
+					placeholder="Enter players"
 				/>
 				<input
 					type="checkbox"
-					value={exact}
+					checked={exact}
 					onChange={() => setExact((prev) => !prev)}
 					id="exact"
 				/>
@@ -46,7 +52,7 @@ export default function App() {
 			<div className="result">
 				{!isLoading && (
 					<>
-          <div className="bold">Found: {players.response.length}</div>
+						{players.response.length ? <div className="bold">Found: {players.response.length}</div>:<></>}
 						<ul>
 							{players.response.map((item, idx) => {
 								return (
@@ -64,7 +70,7 @@ export default function App() {
 								);
 							})}
 						</ul>
-						<div className="bold">Not Found</div>
+						{players.notFound.length ? <div className="bold">Not Found</div>:<></>}
 						{players.notFound.map((item, idx) => (
 							<div key={idx}>{item}: Not Found</div>
 						))}
