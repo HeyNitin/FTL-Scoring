@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./styles.css";
 import axios from "axios";
+import { config } from "./config";
 
 export default function App() {
 	const [playerName, setPlayerName] = useState("");
@@ -14,7 +15,7 @@ export default function App() {
 		setIsLoading(true);
 		try {
 			const res = await axios.get(
-				`https://FTL-Scoring.heynitin.repl.co/${playerName}/${gameWeek}/${exact}`
+				`${config.serverURL()}/${playerName}/${gameWeek}/${exact}`
 			);
 			setPlayers(res.data);
 		} catch (e) {
