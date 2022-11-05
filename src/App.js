@@ -17,7 +17,11 @@ export default function App() {
 			const res = await axios.get(
 				`${config.serverURL()}/${playerName}/${gameWeek}/${exact}`
 			);
-			setPlayers(res.data);
+			if(res.data.status === 200){
+				setPlayers(res.data);
+			}else{
+				alert(res.data.reason)
+			}
 		} catch (e) {
 			alert("Something went wrong!");
 			console.log(e);
@@ -52,7 +56,11 @@ export default function App() {
 			<div className="result">
 				{!isLoading && (
 					<>
-						{players.response.length ? <div className="bold">Found: {players.response.length}</div>:<></>}
+						{players.response.length ? (
+							<div className="bold">Found: {players.response.length}</div>
+						) : (
+							<></>
+						)}
 						<ul>
 							{players.response.map((item, idx) => {
 								return (
@@ -70,7 +78,11 @@ export default function App() {
 								);
 							})}
 						</ul>
-						{players.notFound.length ? <div className="bold">Not Found</div>:<></>}
+						{players.notFound.length ? (
+							<div className="bold">Not Found</div>
+						) : (
+							<></>
+						)}
 						{players.notFound.map((item, idx) => (
 							<div key={idx}>{item}: Not Found</div>
 						))}
