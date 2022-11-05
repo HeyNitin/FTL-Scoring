@@ -17,3 +17,11 @@ button {
   display: block;
   margin: 1rem auto;
 }
+
+.bold{
+  font-weight: bold;
+}
+
+ul{
+  list-style: none;
+}
