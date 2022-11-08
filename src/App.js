@@ -37,12 +37,14 @@ export default function App() {
 					value={gameWeek}
 					onChange={(e) => setGameWeek(e.target.value)}
 					placeholder="Enter Game Week"
+					required
 				/>
 				<input
 					className="textfield"
 					value={playerName}
 					onChange={(e) => setPlayerName(e.target.value)}
 					placeholder="Enter players"
+					required
 				/>
 				<input
 					type="checkbox"
