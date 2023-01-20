@@ -1,26 +1,29 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./styles.css";
 import axios from "axios";
 import { config } from "./config";
 
 export default function App() {
-	const [playerName, setPlayerName] = useState("");
-	const [gameWeek, setGameWeek] = useState("");
-	const [exact, setExact] = useState(true);
 	const [players, setPlayers] = useState({ response: [], notFound: [] });
 	const [isLoading, setIsLoading] = useState(false);
+	const gameWeekRef = useRef();
+	const playerRef = useRef();
+	const exact = useRef();
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		setIsLoading(true);
 		try {
 			const res = await axios.get(
-				`${config.serverURL()}/${playerName}/${gameWeek}/${exact}`
+				`${config.serverURL()}/${playerRef.current.value}/${
+					gameWeekRef.current.value
+				}/${exact.current.checked}`
 			);
-			if(res.data.status === 200){
+			if (res.data.status === 200) {
+				console.log(res.data)
 				setPlayers(res.data);
-			}else{
-				alert(res.data.reason)
+			} else {
+				alert(res.data.reason);
 			}
 		} catch (e) {
 			alert("Something went wrong!");
@@ -34,24 +37,18 @@ export default function App() {
 			<form onSubmit={(e) => submitHandler(e)}>
 				<input
 					className="textfield"
-					value={gameWeek}
-					onChange={(e) => setGameWeek(e.target.value)}
+					ref={gameWeekRef}
 					placeholder="Enter Game Week"
 					required
+					autoFocus
 				/>
 				<input
 					className="textfield"
-					value={playerName}
-					onChange={(e) => setPlayerName(e.target.value)}
+					ref={playerRef}
 					placeholder="Enter players"
 					required
 				/>
-				<input
-					type="checkbox"
-					checked={exact}
-					onChange={() => setExact((prev) => !prev)}
-					id="exact"
-				/>
+				<input type="checkbox" ref={exact} id="exact" />
 				<label htmlFor="exact">Find Exact match</label>
 				<button>Get Score</button>
 			</form>
