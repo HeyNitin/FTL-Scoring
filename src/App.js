@@ -20,7 +20,7 @@ export default function App() {
 				}/${exact.current.checked}`
 			);
 			if (res.data.status === 200) {
-				console.log(res.data)
+				console.log(res.data);
 				setPlayers(res.data);
 			} else {
 				alert(res.data.reason);
@@ -66,13 +66,14 @@ export default function App() {
 									<li key={idx + 1}>
 										{idx + 1}:{" "}
 										{item.player.first_name + " " + item.player.second_name}:{" "}
-										{item.points.total_points -
-											item.points.bonus -
-											(item.points.minutes >= 60
-												? 2
-												: item.points.minutes >= 1
-												? 1
-												: 0)}
+										{item.points.reduce((res, points) => {
+											return (
+												res +
+												points.total_points -
+												points.bonus -
+												(points.minutes >= 60 ? 2 : points.minutes >= 1 ? 1 : 0)
+											);
+										}, 0)}
 									</li>
 								);
 							})}
@@ -93,13 +94,14 @@ export default function App() {
 						{players.response.reduce(
 							(total, item) =>
 								total +
-								item.points.total_points -
-								item.points.bonus -
-								(item.points.minutes >= 60
-									? 2
-									: item.points.minutes >= 1
-									? 1
-									: 0),
+								item.points.reduce((res, points) => {
+									return (
+										res +
+										points.total_points -
+										points.bonus -
+										(points.minutes >= 60 ? 2 : points.minutes >= 1 ? 1 : 0)
+									);
+								}, 0),
 							0
 						)}
 					</div>
