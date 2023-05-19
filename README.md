@@ -1,6 +1,7 @@
 # FTL-Scoring
 
 <div align="center">
+  
   [![Netlify Status](https://api.netlify.com/api/v1/badges/2550ddaa-2858-4500-a624-ec57123b41f2/deploy-status)](https://app.netlify.com/sites/ftlscoring/deploys)
   
 </div>
