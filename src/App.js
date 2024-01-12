@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import "./styles.css";
 import axios from "axios";
-import { config } from "./config";
+
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 export default function App() {
 	const [players, setPlayers] = useState({ response: [], notFound: [] });
@@ -15,9 +16,7 @@ export default function App() {
 		setIsLoading(true);
 		try {
 			const res = await axios.get(
-				`${config.serverURL()}/${playerRef.current.value}/${
-					gameWeekRef.current.value
-				}/${exact.current.checked}`
+				`${baseURL}/${playerRef.current.value}/${gameWeekRef.current.value}/${exact.current.checked}`
 			);
 			if (res.data.status === 200) {
 				console.log(res.data);
